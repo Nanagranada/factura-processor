@@ -1,8 +1,5 @@
 cat > app/templates/dashboard.html << 'EOF'
 {% extends "base.html" %}
-
-{% block title %}Dashboard - Procesador de Facturas{% endblock %}
-
 {% block content %}
 <div class="row mb-4">
     <div class="col-md-8">
@@ -10,15 +7,13 @@ cat > app/templates/dashboard.html << 'EOF'
         <p>Bienvenido, {{ current_user.username }}. Aquí puedes gestionar tus facturas.</p>
     </div>
     <div class="col-md-4 text-end">
-        <a href="{{ url_for('main.upload_invoice') }}" class="btn btn-primary">
-            <i class="bi bi-upload"></i> Subir Nueva Factura
-        </a>
+        <a href="{{ url_for('main.upload_invoice') }}" class="btn btn-primary">Subir Nueva Factura</a>
     </div>
 </div>
 
 <div class="card">
     <div class="card-header">
-        <h5 class="mb-0">Mis Facturas</h5>
+        <h5>Mis Facturas</h5>
     </div>
     <div class="card-body">
         {% if invoices %}
@@ -31,7 +26,6 @@ cat > app/templates/dashboard.html << 'EOF'
                         <th>Proveedor</th>
                         <th>Monto</th>
                         <th>Estado</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,13 +40,6 @@ cat > app/templates/dashboard.html << 'EOF'
                             <span class="badge bg-success">Procesada</span>
                             {% else %}
                             <span class="badge bg-warning">Pendiente</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if not invoice.processed %}
-                            <button class="btn btn-sm btn-primary">Procesar</button>
-                            {% else %}
-                            <button class="btn btn-sm btn-secondary" disabled>Procesada</button>
                             {% endif %}
                         </td>
                     </tr>
