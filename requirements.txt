@@ -1,0 +1,9 @@
+Flask==2.0.1
+Flask-Login==0.5.0
+Flask-SQLAlchemy==2.5.1
+Werkzeug==2.0.1
+pytesseract==0.3.8
+pdf2image==1.16.0
+pandas==1.3.3
+openpyxl==3.0.9
+Pillow==8.3.2
