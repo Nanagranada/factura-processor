@@ -1,3 +1,4 @@
+cat > app/templates/dashboard.html << 'EOF'
 {% extends "base.html" %}
 
 {% block title %}Dashboard - Procesador de Facturas{% endblock %}
@@ -36,10 +37,10 @@
                 <tbody>
                     {% for invoice in invoices %}
                     <tr>
-                        <td>{{ invoice.invoice_number }}</td>
+                        <td>{{ invoice.invoice_number or 'N/A' }}</td>
                         <td>{{ invoice.invoice_date.strftime('%d/%m/%Y') if invoice.invoice_date else 'N/A' }}</td>
-                        <td>{{ invoice.supplier_name }}</td>
-                        <td>${{ "%.2f"|format(invoice.total_amount) }}</td>
+                        <td>{{ invoice.supplier_name or 'N/A' }}</td>
+                        <td>${{ "%.2f"|format(invoice.total_amount or 0) }}</td>
                         <td>
                             {% if invoice.processed %}
                             <span class="badge bg-success">Procesada</span>
@@ -49,7 +50,7 @@
                         </td>
                         <td>
                             {% if not invoice.processed %}
-                            <a href="{{ url_for('main.process_invoice', invoice_id=invoice.id) }}" class="btn btn-sm btn-primary">Procesar</a>
+                            <button class="btn btn-sm btn-primary">Procesar</button>
                             {% else %}
                             <button class="btn btn-sm btn-secondary" disabled>Procesada</button>
                             {% endif %}
@@ -67,3 +68,4 @@
     </div>
 </div>
 {% endblock %}
+EOF
