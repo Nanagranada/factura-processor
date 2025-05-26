@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Subir Factura - Procesador de Facturas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Subir Nueva Factura</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="invoice" class="form-label">Archivo de Factura (PDF)</label>
+                        <input type="file" class="form-control" id="invoice" name="invoice" accept=".pdf" required>
+                        <div class="form-text">Sube un archivo PDF de la factura para procesarlo automáticamente.</div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <h5>Instrucciones:</h5>
+                        <ol>
+                            <li>Asegúrate de que el PDF sea legible y no esté protegido con contraseña.</li>
+                            <li>El sistema extraerá automáticamente la información relevante como número de factura, fecha, proveedor y monto.</li>
+                            <li>Después de subir la factura, podrás revisarla en el dashboard y procesarla para Helisa.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Subir y Procesar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
