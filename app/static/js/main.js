@@ -1,5 +1,4 @@
-// Funcionalidad JavaScript para la aplicación
-
+cat > app/static/js/main.js << 'EOF'
 document.addEventListener('DOMContentLoaded', function() {
     // Cerrar automáticamente las alertas después de 5 segundos
     const alerts = document.querySelectorAll('.alert');
@@ -31,14 +30,5 @@ document.addEventListener('DOMContentLoaded', function() {
             invoiceInput.parentElement.appendChild(fileInfo);
         });
     }
-
-    // Confirmación para eliminar elementos
-    const deleteButtons = document.querySelectorAll('.btn-danger');
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function(e) {
-            if (!confirm('¿Estás seguro de que deseas eliminar este elemento? Esta acción no se puede deshacer.')) {
-                e.preventDefault();
-            }
-        });
-    });
 });
+EOF
