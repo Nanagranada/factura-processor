@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Procesador de Facturas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">Bienvenido al Procesador de Facturas</h1>
+        <p class="lead">Una solución eficiente para procesar facturas y exportarlas a Helisa</p>
+        
+        <div class="mt-5">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Procesamiento OCR</h5>
+                            <p class="card-text">Extracción automática de datos de facturas mediante reconocimiento óptico de caracteres.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Integración con Helisa</h5>
+                            <p class="card-text">Exportación de datos en formato compatible con el software contable Helisa.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Gestión Multiusuario</h5>
+                            <p class="card-text">Permite que múltiples usuarios procesen facturas de forma simultánea.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
