@@ -1,3 +1,4 @@
+cat > app/templates/index.html << 'EOF'
 {% extends "base.html" %}
 
 {% block title %}Inicio - Procesador de Facturas{% endblock %}
@@ -13,6 +14,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
+                            <i class="bi bi-eye h1 text-primary"></i>
                             <h5 class="card-title">Procesamiento OCR</h5>
                             <p class="card-text">Extracción automática de datos de facturas mediante reconocimiento óptico de caracteres.</p>
                         </div>
@@ -21,6 +23,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
+                            <i class="bi bi-arrow-repeat h1 text-success"></i>
                             <h5 class="card-title">Integración con Helisa</h5>
                             <p class="card-text">Exportación de datos en formato compatible con el software contable Helisa.</p>
                         </div>
@@ -29,6 +32,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
+                            <i class="bi bi-people h1 text-info"></i>
                             <h5 class="card-title">Gestión Multiusuario</h5>
                             <p class="card-text">Permite que múltiples usuarios procesen facturas de forma simultánea.</p>
                         </div>
@@ -38,8 +42,13 @@
         </div>
         
         <div class="mt-4">
-            <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary btn-lg">Ir al Dashboard</a>
+            {% else %}
+                <a href="{{ url_for('main.login') }}" class="btn btn-primary btn-lg">Iniciar Sesión</a>
+            {% endif %}
         </div>
     </div>
 </div>
 {% endblock %}
+EOF
