@@ -31,7 +31,7 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
 
-    # Registrar rutas
+    # Registrar rutas (ESTO ES LO IMPORTANTE)
     from app.routes import main_bp
     app.register_blueprint(main_bp)
 
