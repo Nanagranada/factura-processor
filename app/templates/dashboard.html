@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Procesador de Facturas{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>Dashboard</h2>
+        <p>Bienvenido, {{ current_user.username }}. Aquí puedes gestionar tus facturas.</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{{ url_for('main.upload_invoice') }}" class="btn btn-primary">
+            <i class="bi bi-upload"></i> Subir Nueva Factura
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Mis Facturas</h5>
+    </div>
+    <div class="card-body">
+        {% if invoices %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice in invoices %}
+                    <tr>
+                        <td>{{ invoice.invoice_number }}</td>
+                        <td>{{ invoice.invoice_date.strftime('%d/%m/%Y') if invoice.invoice_date else 'N/A' }}</td>
+                        <td>{{ invoice.supplier_name }}</td>
+                        <td>${{ "%.2f"|format(invoice.total_amount) }}</td>
+                        <td>
+                            {% if invoice.processed %}
+                            <span class="badge bg-success">Procesada</span>
+                            {% else %}
+                            <span class="badge bg-warning">Pendiente</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not invoice.processed %}
+                            <a href="{{ url_for('main.process_invoice', invoice_id=invoice.id) }}" class="btn btn-sm btn-primary">Procesar</a>
+                            {% else %}
+                            <button class="btn btn-sm btn-secondary" disabled>Procesada</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            No tienes facturas registradas. ¡Comienza subiendo una nueva factura!
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
