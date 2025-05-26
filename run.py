@@ -1,9 +1,29 @@
 cat > run.py << 'EOF'
-from app import create_app
+from app import create_app, db
+from app.models import User, Invoice
 
 app = create_app()
 
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'User': User, 'Invoice': Invoice}
+
 if __name__ == '__main__':
-    print("Iniciando aplicación Flask...")
+    with app.app_context():
+        # Crear todas las tablas
+        db.create_all()
+        
+        # Crear usuario admin por defecto si no existe
+        admin = User.query.filter_by(username='admin').first()
+        if not admin:
+            admin = User(username='admin', email='admin@facturas.com', is_admin=True)
+            admin.set_password('admin123')
+            db.session.add(admin)
+            db.session.commit()
+            print("✓ Usuario admin creado: username='admin', password='admin123'")
+        else:
+            print("✓ Usuario admin ya existe")
+    
+    print("✓ Iniciando aplicación Flask...")
     app.run(debug=True, host='0.0.0.0', port=5000)
 EOF
