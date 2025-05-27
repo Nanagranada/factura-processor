@@ -22,14 +22,14 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        
+
         if user and user.check_password(password):
             login_user(user)
             flash('Inicio de sesión exitoso', 'success')
             return redirect(url_for('main.dashboard'))
         else:
             flash('Usuario o contraseña incorrectos', 'error')
-    
+
     return render_template('login.html')
 
 @main_bp.route('/logout')
@@ -55,22 +55,19 @@ def upload_invoice():
         if 'invoice' not in request.files:
             flash('No se seleccionó ningún archivo', 'error')
             return redirect(request.url)
-        
+
         file = request.files['invoice']
         if file.filename == '':
             flash('No se seleccionó ningún archivo', 'error')
             return redirect(request.url)
-        
+
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            # Añadir timestamp para evitar conflictos
             timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
             filename = timestamp + filename
             filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
-            
-            # Por ahora, crear un registro básico
-            # Más adelante agregaremos OCR
+
             invoice = Invoice(
                 filename=filename,
                 invoice_number=f"INV-{timestamp}",
@@ -79,15 +76,15 @@ def upload_invoice():
                 description="Factura subida - pendiente de procesamiento OCR",
                 user_id=current_user.id
             )
-            
+
             db.session.add(invoice)
             db.session.commit()
-            
+
             flash('Factura subida exitosamente', 'success')
             return redirect(url_for('main.dashboard'))
         else:
             flash('Tipo de archivo no permitido. Solo se permiten archivos PDF.', 'error')
-    
+
     return render_template('upload.html')
 
 @main_bp.route('/admin')
@@ -96,7 +93,7 @@ def admin():
     if not current_user.is_admin:
         flash('No tienes permisos de administrador', 'error')
         return redirect(url_for('main.dashboard'))
-    
+
     users = User.query.all()
     invoices = Invoice.query.all()
     return render_template('admin.html', users=users, invoices=invoices)
